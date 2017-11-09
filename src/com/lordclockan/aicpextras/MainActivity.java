@@ -1,9 +1,13 @@
 package com.lordclockan.aicpextras;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.graphics.drawable.Icon;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -27,17 +31,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.System;
+import java.util.Arrays;
 
 import com.lordclockan.R;
+import com.lordclockan.aicpextras.utils.Helpers;
+import com.lordclockan.aicpextras.utils.Utils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    
+    static final String TAG = MainActivity.class.getSimpleName();
 
     public static final String INTENT_EXTRA_INIT_FRAGMENT = "init_fragment";
     public static final String INIT_FRAGMENT_HALO = "halo";
-
     private static final String NAV_ITEM_ID = "navItemId";
-    static final String TAG = MainActivity.class.getSimpleName();
 
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle toggle;
