@@ -841,6 +841,9 @@
 
     <!-- AdAway -->
     <string name="adaway_settings_title">AdAway</string>
+    
+    <!-- Kernel Adiutor -->
+    <string name="kernel_adiutor_settings_title">Kernel Adiutor</string>
 
     <!-- Hide Apps from Recents -->
     <string name="hide_apps_from_recents_title">Hidden Apps</string>
