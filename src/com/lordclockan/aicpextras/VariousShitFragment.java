@@ -9,7 +9,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ResolveInfo;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Point;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemProperties;
 import android.preference.ListPreference;
@@ -24,6 +30,7 @@ import android.view.View;
 
 import com.lordclockan.R;
 import com.lordclockan.aicpextras.utils.Helpers;
+import com.lordclockan.aicpextras.utils.CMDProcessor;
 
 public class VariousShitFragment extends Fragment {
 
@@ -50,6 +57,7 @@ public class VariousShitFragment extends Fragment {
         private static final String SCROLLINGCACHE_DEFAULT = "1";
         private static final String PREF_SYSTEMUI_TUNER = "systemui_tuner";
         private static final String PREF_ADAWAY_START = "adaway_start";
+        private static final String PREF_KERNEL_AUDIUTOR_START = "kernel_adiutor_start";
         private static final String PREF_MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
         private static final String PREF_BOOT_DIALOG_PIMPING = "boot_dialog_pimping";
 
@@ -71,6 +79,12 @@ public class VariousShitFragment extends Fragment {
         // Intent for launching the AdAway main actvity
         public static Intent INTENT_ADAWAY = new Intent(Intent.ACTION_MAIN)
                 .setClassName(ADAWAY_PACKAGE_NAME, ADAWAY_PACKAGE_NAME + ".ui.BaseActivity");
+        
+        // Package name of the Kernel Adiutor app
+        public static final String KERNEL_AUDIUTOR_PACKAGE_NAME = "com.grarak.kerneladiutor";
+        // Intent for launching the Kernel Adiutor main actvity
+        public static Intent INTENT_KERNEL_AUDIUTOR = new Intent(Intent.ACTION_MAIN)
+                .setClassName(KERNEL_AUDIUTOR_PACKAGE_NAME, KERNEL_AUDIUTOR_PACKAGE_NAME + ".MainActivity");    
 
         private ListPreference mScrollingCachePref;
         private ListPreference mMsob;
@@ -83,6 +97,7 @@ public class VariousShitFragment extends Fragment {
         private Preference mSystemappRemover;
         private Preference mWakelockBlocker;
         private Preference mAdAway;
+        private Preference mKernelAdiutor;
         private Preference mBootDialogPimping;
 
         @Override
@@ -116,7 +131,12 @@ public class VariousShitFragment extends Fragment {
 
             mAdAway = (Preference) prefSet.findPreference(PREF_ADAWAY_START);
             if (!Helpers.isPackageInstalled(ADAWAY_PACKAGE_NAME, pm)) {
-                prefSet.removePreference(mAdAway);
+                prefSet.removePreference(mAdAway);    
+            }
+            
+            mKernelAdiutor = (Preference)  prefSet.findPreference(PREF_KERNEL_AUDIUTOR_START);
+            if (!Helpers.isPackageInstalled(KERNEL_AUDIUTOR_PACKAGE_NAME, pm)) {
+                prefSet.removePreference(mKernelAdiutor);
             }
 
             sharedPreferences();
@@ -162,6 +182,8 @@ public class VariousShitFragment extends Fragment {
                 getActivity().startActivity(INTENT_AICPSETTINGS_WAKELOCK_BLOCKER_SETTINGS);
             } else if (preference == mAdAway) {
                 getActivity().startActivity(INTENT_ADAWAY);
+            } else if (preference == mKernelAdiutor) {
+                getActivity().startActivity(INTENT_KERNEL_AUDIUTOR);    
             } else if (preference == mBootDialogPimping) {
                 Intent intent = new Intent(getActivity(), BootDialog.class);
                 startActivity(intent);
